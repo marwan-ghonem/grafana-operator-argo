@@ -1,14 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: grafana-operator
+  name: grafana-operator-fixed
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://grafana.github.io/helm-charts
     chart: grafana-operator
-    targetRevision: 5.5.12
+    targetRevision: 5.5.12   # force sync update
+    helm:
+      values: |
+        grafana:
+          enabled: true
   destination:
     server: https://kubernetes.default.svc
     namespace: grafana
